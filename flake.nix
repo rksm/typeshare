@@ -42,8 +42,36 @@
               license = with licenses; [ asl20 /* or */ mit ];
             };
           };
+
+        devShell = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [
+            cargo
+            cargo-insta
+            cargo-nextest
+            clang
+            clippy
+            pkg-config
+            rustc
+            just
+          ];
+
+          buildInputs = with pkgs; [
+            openssl
+          ];
+
+          packages = with pkgs; [
+            rust-analyzer
+            rustfmt
+          ];
+
+          RUST_BACKTRACE = "1";
+          RUST_LOG = "debug";
+          LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+        };
+
       in
       {
         packages.default = typeshare;
+        devShells.default = devShell;
       });
 }

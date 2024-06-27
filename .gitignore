@@ -13,3 +13,4 @@ dist/
 # IDE specific files
 .idea/
 .vscode/
+/.direnv/
